@@ -67,7 +67,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
        * 界面显示
        */
       // 是否开启侧边栏 Logo
-      isShowLogo: false,
+      isShowLogo: true,
       // 初始化变量，用于 el-scrollbar 的高度更新，请勿删除
       isShowLogoChange: false,
       // 是否开启 Breadcrumb，强制经典、横向布局不显示
@@ -77,7 +77,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
       // 是否开启 Breadcrumb 图标
       isBreadcrumbIcon: false,
       // 是否开启 Tagsview 图标
-      isTagsviewIcon: true,
+      isTagsviewIcon: false,
       // 是否开启 TagsView 缓存
       isCacheTagsView: false,
       // 是否开启 TagsView 拖拽
@@ -116,7 +116,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
        * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
        */
       // 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults
-      layout: 'classic',
+      layout: 'defaults',
 
       /**
        * 后端控制路由
