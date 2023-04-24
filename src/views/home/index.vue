@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="home-container" style="height: 100%;">
     <svg-icon icon-class="bug" />
 

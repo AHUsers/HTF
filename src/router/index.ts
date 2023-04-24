@@ -33,7 +33,7 @@ const pathMatch = {
  * @returns 返回处理后的一维路由菜单数组
  */
 export function formatFlatteningRoutes(arr: any) {
-
+  console.log("接收到的路由数据", arr)
   if (arr.length <= 0) return false;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].children) {
@@ -52,7 +52,7 @@ export function formatFlatteningRoutes(arr: any) {
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
  */
 export function formatTwoStageRoutes(arr: any) {
-  // console.log("接受的数据",arr)
+  console.log("接受的数据",arr)
   if (arr.length <= 0) return false;
   const newArr: any = [];
   const cacheList: Array<string> = [];
@@ -106,7 +106,10 @@ export function setCacheTagsViewRoutes() {
   // 获取有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
   let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, store.state.userInfos.userInfos.roles);
   // 添加到 vuex setTagsViewRoutes 中
-  store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children);
+  // console.log("rolesRoutes",rolesRoutes[0].children)
+  // console.log("formatFlatteningRoutes(rolesRoutes[0].children))",formatFlatteningRoutes(rolesRoutes))
+  console.log("formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children",formatTwoStageRoutes(formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))))
+  store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes)));
 }
 
 /**
@@ -177,10 +180,11 @@ export function setFilterRoute(chil: any) {
  * @returns 返回替换后的路由数组
  */
 export function setFilterRouteEnd() {
-  console.log("动态路由的数据",dynamicRoutes[0].children)
-  let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes[0].children));
-  console.log("filterRouteEnd数据",filterRouteEnd)
+  console.log("动态路由的数据",dynamicRoutes)
+  let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
+  console.log("filterRouteEnd测试数据",filterRouteEnd)
   filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), {...pathMatch}];
+  console.log("filterRouteEnd数据",filterRouteEnd)
   return filterRouteEnd;
 }
 
@@ -243,8 +247,9 @@ router.beforeEach(async (to, from, next) => {
           // 动态添加路由：防止非首页刷新时跳转回首页的问题
           // 确保 addRoute() 时动态添加的路由已经被完全加载上去
           next({...to, replace: true});
+        } else {
+          next()
         }
-        next('/home')
       } else {
         next();
       }

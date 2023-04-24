@@ -10,7 +10,9 @@ const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 	},
 	mutations: {
 		// 设置 TagsView 路由
+		
 		getTagsViewRoutes(state: any, data: Array<string>) {
+			console.log("设置 TagsView 路由",data)
 			state.tagsViewRoutes = data;
 		},
 		// 设置卡片全屏
