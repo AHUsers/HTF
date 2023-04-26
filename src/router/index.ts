@@ -183,7 +183,7 @@ export function setFilterRouteEnd() {
   console.log("动态路由的数据",dynamicRoutes)
   let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
   console.log("filterRouteEnd测试数据",filterRouteEnd)
-  filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), {...pathMatch}];
+  filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd), {...pathMatch}];
   console.log("filterRouteEnd数据",filterRouteEnd)
   return filterRouteEnd;
 }
