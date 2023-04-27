@@ -25,6 +25,7 @@ const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 		// 设置 TagsView 路由
 		async setTagsViewRoutes({ commit }, data: Array<string>) {
 			commit('getTagsViewRoutes', data);
+			console.log("data",data)
 		},
 		// 设置卡片全屏
 		setCurrenFullscreen({ commit }, bool: Boolean) {

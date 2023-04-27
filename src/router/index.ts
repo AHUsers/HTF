@@ -33,14 +33,14 @@ const pathMatch = {
  * @returns 返回处理后的一维路由菜单数组
  */
 export function formatFlatteningRoutes(arr: any) {
-  console.log("接收到的路由数据", arr)
+  // console.log("接收到的路由数据", arr)
   if (arr.length <= 0) return false;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].children) {
       arr = arr.slice(0, i + 1).concat(arr[i].children, arr.slice(i + 1));
     }
   }
-  console.log("处理后的数据", arr)
+  // console.log("处理后的数据", arr)
   return arr;
 }
 
@@ -52,7 +52,7 @@ export function formatFlatteningRoutes(arr: any) {
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
  */
 export function formatTwoStageRoutes(arr: any) {
-  console.log("接受的数据",arr)
+  // console.log("接受的数据",arr)
   if (arr.length <= 0) return false;
   const newArr: any = [];
   const cacheList: Array<string> = [];
@@ -68,7 +68,7 @@ export function formatTwoStageRoutes(arr: any) {
         children: []
       });
     } else {
-      console.log("else数据",v)
+      // console.log("else数据",v)
       newArr.push({
         component: v.component,
         name: v.name,
@@ -94,7 +94,7 @@ export function formatTwoStageRoutes(arr: any) {
       // return
     }
   });
-  console.log("newArr数据",newArr)
+  // console.log("newArr数据",newArr)
   return newArr;
 }
 
@@ -106,10 +106,8 @@ export function setCacheTagsViewRoutes() {
   // 获取有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
   let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, store.state.userInfos.userInfos.roles);
   // 添加到 vuex setTagsViewRoutes 中
-  // console.log("rolesRoutes",rolesRoutes[0].children)
-  // console.log("formatFlatteningRoutes(rolesRoutes[0].children))",formatFlatteningRoutes(rolesRoutes))
   console.log("formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children",formatTwoStageRoutes(formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))))
-  store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes)));
+  store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))));
 }
 
 /**
@@ -180,11 +178,8 @@ export function setFilterRoute(chil: any) {
  * @returns 返回替换后的路由数组
  */
 export function setFilterRouteEnd() {
-  console.log("动态路由的数据",dynamicRoutes)
   let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
-  console.log("filterRouteEnd测试数据",filterRouteEnd)
-  filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), {...pathMatch}];
-  console.log("filterRouteEnd数据",filterRouteEnd)
+  filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd), {...pathMatch}];
   return filterRouteEnd;
 }
 
